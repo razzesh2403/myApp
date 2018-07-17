@@ -25,7 +25,7 @@
   <div fxFlex="40">
     <div class="container" fxLayout="column" fxLayoutGap="10px">
       <div fxFlex *ngIf="dish">    
-        <mat-list fxFlex>
+        <mat-list>
             <h3>Comments</h3>
           <mat-list-item *ngFor="let cmnt of dish.comments">
             <img matListAvatar src={{dish.image}} alt={{dish.name}}>
