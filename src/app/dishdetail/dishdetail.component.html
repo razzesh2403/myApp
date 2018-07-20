@@ -36,6 +36,10 @@
           </mat-list-item>
         </mat-list>
       </div>
+      <div [hidden]="dish" fxFlex>
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
+      </div>
     </div>
   </div>
 
