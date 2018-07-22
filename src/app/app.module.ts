@@ -74,7 +74,7 @@ import { LoginComponent } from './login/login.component';
   entryComponents: [
     LoginComponent
 ],
-  providers: [DishService, LeaderService],
+  providers: [DishService, LeaderService, PromotionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
