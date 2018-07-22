@@ -59,12 +59,13 @@
         </mat-form-field>
       </p>
       <p>
-        <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="1"></mat-slider>
+        <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="1" ></mat-slider>
       </p>
       <p>
         <mat-form-field class="full-width">
           <textarea matInput formControlName="comment" placeholder="Your Comment" rows=8></textarea>
-          <mat-error *ngIf="userCommentsForm.get('comment').hasError('required') && userCommentsForm.get('comment').touched">Comment is required</mat-error>
+          <!--<mat-error *ngIf="userCommentsForm.get('comment').hasError('required') && userCommentsForm.get('comment').touched">Comment is required</mat-error>-->
+          <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
         </mat-form-field>
       </p>
       <!--If the author name and comment fields are un-touched or has errors then the submit button will be hidden, 
