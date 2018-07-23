@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 import { Dish } from '../shared/dish';
 import { Comment } from '../shared/comment';
-
 import { DishService } from '../services/dish.service';
 
-import { switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-dishdetail',
@@ -37,10 +37,10 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
-      errmess => this.dishErrMess  = <any>errmess);
+      errmess => this.dishErrMess  = <any>errmess.message);
     this.route.params.pipe(switchMap((params : Params) => this.dishService.getDish(+params['id'])))
     .subscribe( dish => { this.dish = dish; this.setPrevNext(dish.id); },
-    errmess => this.dishErrMess  = <any>errmess);
+    errmess => this.dishErrMess  = <any>errmess.message);
   }
 
   setPrevNext(dishId: number) {
