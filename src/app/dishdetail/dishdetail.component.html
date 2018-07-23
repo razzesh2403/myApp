@@ -9,7 +9,7 @@
             <h3>{{dish.name | uppercase}}</h3>
           </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src={{dish.image}} alt={{dish.name}}>
+        <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
         <mat-card-content>
           <p>{{dish.description}}
           </p>
@@ -35,7 +35,7 @@
         <mat-list>
           <h3>Comments</h3>
           <mat-list-item *ngFor="let cmnt of dish.comments">
-            <img matListAvatar src={{dish.image}} alt={{dish.name}}>
+            <img matListAvatar src="{{BaseURL + dish.image}}" alt={{dish.name}}>
             <p matLine> {{cmnt.comment}} </p>
             <p matLine> {{cmnt.rating}} Stars </p>
             <p matLine> {{cmnt.author}} {{cmnt.date | date}}</p>
@@ -53,7 +53,7 @@
     <mat-list>
       <mat-list-item>
         <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
-        <p matLine>{{this.userCommentsForm.get('rating').value}}</p>
+        <p matLine>{{this.userCommentsForm.get('rating').value}} Stars</p>
         <p matLine>{{this.userCommentsForm.get('author').value}}</p>
       </mat-list-item>
     </mat-list>
