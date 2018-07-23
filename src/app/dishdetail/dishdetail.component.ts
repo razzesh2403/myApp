@@ -68,7 +68,7 @@ export class DishdetailComponent implements OnInit {
   createForm() {
     this.userCommentsForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      rating: [''],
+      rating: ['5'],
       comment: ['',  [Validators.required]],
       date : ['']
     });
@@ -103,12 +103,13 @@ export class DishdetailComponent implements OnInit {
     this.userComments.date = new Date().toISOString();
     console.log(this.userComments);
     this.dish.comments.push(this.userComments);
+    this.userCommentsFormDirective.resetForm();
     this.userCommentsForm.reset({
       author: '',
-      rating: '',
+      rating: '5',
       comment: '',
       data : ''
     });
-    this.userCommentsFormDirective.resetForm();
+    
   }
 }

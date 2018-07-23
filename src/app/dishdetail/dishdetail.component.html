@@ -37,7 +37,7 @@
           <mat-list-item *ngFor="let cmnt of dish.comments">
             <img matListAvatar src={{dish.image}} alt={{dish.name}}>
             <p matLine> {{cmnt.comment}} </p>
-            <p matLine> {{cmnt.rating}} </p>
+            <p matLine> {{cmnt.rating}} Stars </p>
             <p matLine> {{cmnt.author}} {{cmnt.date | date}}</p>
           </mat-list-item>
         </mat-list>
@@ -50,6 +50,13 @@
   </div>
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <!--<p>{{ userCommentsForm.value | json }} {{ userCommentsForm.status | json }}</p>-->
+    <mat-list>
+      <mat-list-item>
+        <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
+        <p matLine>{{this.userCommentsForm.get('rating').value}}</p>
+        <p matLine>{{this.userCommentsForm.get('author').value}}</p>
+      </mat-list-item>
+    </mat-list>
     <form novalidate name="myForm" [formGroup]="userCommentsForm" #usercommentsform="ngForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
@@ -59,7 +66,7 @@
         </mat-form-field>
       </p>
       <p>
-        <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1" ></mat-slider>
+        <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1"></mat-slider>
       </p>
       <p>
         <mat-form-field class="full-width">
@@ -68,11 +75,8 @@
           <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
         </mat-form-field>
       </p>
-      <!--If the author name and comment fields are un-touched or has errors then the submit button will be hidden, 
-        if the values and filled in both the manidatory fields then submit button will be shown-->
-      <div *ngIf="!userCommentsForm.get('comment').hasError('required') && userCommentsForm.get('comment').touched && !userCommentsForm.get('author').hasError('required') && userCommentsForm.get('author').touched">
-      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
-    </div>
+      <button type="submit" mat-button [disabled]='!userCommentsForm.valid' class="background-primary text-floral-white">Submit</button>
+
     </form>
   </div>
 </div>
