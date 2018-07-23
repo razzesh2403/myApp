@@ -26,6 +26,8 @@ export class DishdetailComponent implements OnInit {
   userComments : Comment;
   userCommentsForm: FormGroup;
   dishErrMess : string;
+  errMess : string;
+  dishcopy = null;
 
   constructor(private dishService : DishService,
               private route : ActivatedRoute,
@@ -39,8 +41,8 @@ export class DishdetailComponent implements OnInit {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
       errmess => this.dishErrMess  = <any>errmess.message);
     this.route.params.pipe(switchMap((params : Params) => this.dishService.getDish(+params['id'])))
-    .subscribe( dish => { this.dish = dish; this.setPrevNext(dish.id); },
-    errmess => this.dishErrMess  = <any>errmess.message);
+    .subscribe( dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+    errmess => { this.dish = null; this.errMess = <any>errmess.message; });
   }
 
   setPrevNext(dishId: number) {
@@ -106,7 +108,10 @@ export class DishdetailComponent implements OnInit {
     this.userComments = this.userCommentsForm.value;
     this.userComments.date = new Date().toISOString();
     console.log(this.userComments);
-    this.dish.comments.push(this.userComments);
+    //this.dish.comments.push(this.userComments);
+    this.dishcopy.comments.push(this.userComments);
+    this.dishcopy.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
     this.userCommentsFormDirective.resetForm();
     this.userCommentsForm.reset({
       author: '',

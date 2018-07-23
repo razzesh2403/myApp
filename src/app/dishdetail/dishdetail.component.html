@@ -35,12 +35,38 @@
         <mat-list>
           <h3>Comments</h3>
           <mat-list-item *ngFor="let cmnt of dish.comments">
-            <img matListAvatar src="{{BaseURL + dish.image}}" alt={{dish.name}}>
+            <!--<img matListAvatar src="{{BaseURL + dish.image}}" alt={{dish.name}}>-->
             <p matLine> {{cmnt.comment}} </p>
             <p matLine> {{cmnt.rating}} Stars </p>
             <p matLine> {{cmnt.author}} {{cmnt.date | date}}</p>
           </mat-list-item>
         </mat-list>
+        <mat-list>
+            <mat-list-item>
+              <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
+              <p matLine>{{this.userCommentsForm.get('rating').value}} Stars</p>
+              <p matLine>{{this.userCommentsForm.get('author').value}}</p>
+            </mat-list-item>
+          </mat-list>
+          <form novalidate name="myForm" [formGroup]="userCommentsForm" #usercommentsform="ngForm" (ngSubmit)="onSubmit()">
+              <mat-form-field class="half-width">
+                <input matInput formControlName="author" placeholder="Name" type="text" required>
+                <!--<mat-error *ngIf="userCommentsForm.get('author').hasError('required') && userCommentsForm.get('author').touched">Name is required</mat-error>-->
+                <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
+              </mat-form-field>
+            <p>
+              <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1"></mat-slider>
+            </p>
+            <p>
+              <mat-form-field class="full-width">
+                <textarea matInput formControlName="comment" placeholder="Your Comment" rows=8></textarea>
+                <!--<mat-error *ngIf="userCommentsForm.get('comment').hasError('required') && userCommentsForm.get('comment').touched">Comment is required</mat-error>-->
+                <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+              </mat-form-field>
+            </p>
+            <button type="submit" mat-button [disabled]='!userCommentsForm.valid' class="background-primary text-floral-white">Submit</button>
+      
+          </form>
       </div>
       <div [hidden]="dish || dishErrMess " fxFlex>
         <mat-spinner></mat-spinner>
@@ -50,37 +76,8 @@
           <h2>Error</h2>
           <h4>{{dishErrMess }}</h4>
         </div>
+        
     </div>
   </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
-    <!--<p>{{ userCommentsForm.value | json }} {{ userCommentsForm.status | json }}</p>-->
-    <mat-list>
-      <mat-list-item>
-        <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
-        <p matLine>{{this.userCommentsForm.get('rating').value}} Stars</p>
-        <p matLine>{{this.userCommentsForm.get('author').value}}</p>
-      </mat-list-item>
-    </mat-list>
-    <form novalidate name="myForm" [formGroup]="userCommentsForm" #usercommentsform="ngForm" (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field class="half-width">
-          <input matInput formControlName="author" placeholder="Name" type="text" required>
-          <!--<mat-error *ngIf="userCommentsForm.get('author').hasError('required') && userCommentsForm.get('author').touched">Name is required</mat-error>-->
-          <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-slider formControlName="rating" placeholder="Rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1"></mat-slider>
-      </p>
-      <p>
-        <mat-form-field class="full-width">
-          <textarea matInput formControlName="comment" placeholder="Your Comment" rows=8></textarea>
-          <!--<mat-error *ngIf="userCommentsForm.get('comment').hasError('required') && userCommentsForm.get('comment').touched">Comment is required</mat-error>-->
-          <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
-        </mat-form-field>
-      </p>
-      <button type="submit" mat-button [disabled]='!userCommentsForm.valid' class="background-primary text-floral-white">Submit</button>
 
-    </form>
-  </div>
 </div>
