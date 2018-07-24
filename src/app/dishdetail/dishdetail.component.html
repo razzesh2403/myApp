@@ -38,14 +38,14 @@
             <!--<img matListAvatar src="{{BaseURL + dish.image}}" alt={{dish.name}}>-->
             <p matLine> {{cmnt.comment}} </p>
             <p matLine> {{cmnt.rating}} Stars </p>
-            <p matLine> {{cmnt.author}} {{cmnt.date | date}}</p>
+            <p matLine> -- {{cmnt.author}} {{cmnt.date | date}}</p>
           </mat-list-item>
         </mat-list>
         <mat-list *ngIf="(userCommentsForm.valid)">
           <mat-list-item>
             <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
             <p matLine>{{this.userCommentsForm.get('rating').value}} Stars</p>
-            <p matLine>{{this.userCommentsForm.get('author').value}}</p>
+            <p matLine>-- {{this.userCommentsForm.get('author').value}}</p>
           </mat-list-item>
         </mat-list>
         <form novalidate name="myForm" [formGroup]="userCommentsForm" #usercommentsform="ngForm" (ngSubmit)="onSubmit()">

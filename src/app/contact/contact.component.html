@@ -36,9 +36,10 @@
       </div>
     </div>
   </div>
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div *ngIf="!returnFeedback">
+  <div fxFlex fxFlexOffset="20px" class="form-size" *ngIf="!loading" [@expand]>
       <h3>Send us your Feedback</h3>
-      <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
+      <!--<p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>-->
   
       <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
         <p>
@@ -77,10 +78,31 @@
           </table>
         <p>
           <mat-form-field class="full-width">
-            <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
+            <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12 required></textarea>
           </mat-form-field>
         </p>
-        <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+        <button type="submit" [disabled]='!feedbackForm.valid' mat-button class="background-primary text-floral-white">Submit</button>
       </form>
+    </div>
+    <div fxflex [hidden]="!loading || contactErrMess">
+      <mat-spinner></mat-spinner><h4>Loading...</h4>
+    </div>
+    <div *ngIf="contactErrMess">
+      <h4>Error</h4>
+      {{contactErrMess}}
+    </div>
+    <div>
+
+    </div>
+  </div>
+    <div fxflex *ngIf="returnFeedback" [@expand]>
+      <h3>Your Submission</h3>
+      <h5>First Name : {{returnFeedback.firstname}}</h5>
+      <h5>Last Name : {{returnFeedback.lastname}}</h5>
+      <h5>Tel. Number : {{returnFeedback.telnum}}</h5>
+      <h5>Email : {{returnFeedback.email}}</h5>
+      <h5>Conctact You? : {{returnFeedback.agree}}</h5>
+      <h5>How ? : {{returnFeedback.contacttype}}</h5>
+      <h5>Feedback : {{returnFeedback.message}}</h5>
     </div>
 </div>

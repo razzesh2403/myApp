@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { flyInOut, expand } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -14,7 +15,8 @@ import { flyInOut } from '../animations/app.animation';
     'style': 'display: block;'
     },
     animations: [
-      flyInOut()
+      flyInOut(),
+      expand()
     ]
 })
 export class ContactComponent implements OnInit {
@@ -23,13 +25,26 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackList : Feedback[];
+  copyFeedbackList = null;
+  copyFeedback = null;
+  returnFeedback = null;
   contactType = ContactType;
+  loading : boolean;
+  contactErrMess : string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private feedbackService : FeedbackService,
+    @Inject('BaseURL') private BaseURL) {
     this.createForm();
   }
 
   ngOnInit() {
+    this.loading=false;
+    this.feedbackService.getFeedbacks().subscribe(feedbacks => {this.copyFeedbackList = feedbacks.slice(0,feedbacks.length);
+       this.feedbackList = feedbacks.slice(0,feedbacks.length);},
+       errmess => this.contactErrMess  = <any>errmess.message);
+    
   }
 
   formErrors = {
@@ -97,8 +112,21 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading=true;
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+    this.copyFeedback = this.feedback;
+    this.copyFeedbackList.push(this.copyFeedback);
+    console.log("copy feedback list from service {}", this.copyFeedbackList);
+    this.feedbackService.submitFeedback(this.copyFeedback).
+    subscribe(feedback => { this.returnFeedback = feedback; 
+                            this.loading=false;
+                            setTimeout(() =>
+                            this.returnFeedback = null
+                          , 5000);});
+    this.feedbackList.push(this.returnFeedback);
+    console.log("after service call this.feedback {}", this.returnFeedback);  
+    console.log("updated feedback list {}", this.feedbackList);
+    
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -109,6 +137,7 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm();
+    
   }
 
 }
