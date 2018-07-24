@@ -12,6 +12,13 @@ body {
   font-family: Roboto, sans-serif; 
   
 }
+
+.highlight {
+  background-color: #D1C4E9;
+  border: 1px solid  #512DA8;
+  z-index: 1;
+  transform: scale(1.01);
+}
 /*
 $lt-gray: #ddd;
 $background-dark: #512DA8;

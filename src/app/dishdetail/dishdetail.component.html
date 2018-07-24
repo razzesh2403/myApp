@@ -41,7 +41,7 @@
             <p matLine> {{cmnt.author}} {{cmnt.date | date}}</p>
           </mat-list-item>
         </mat-list>
-        <mat-list>
+        <mat-list  *ngIf="(userCommentsForm.valid)">
             <mat-list-item>
               <p matLine>{{this.userCommentsForm.get('comment').value}}</p>
               <p matLine>{{this.userCommentsForm.get('rating').value}} Stars</p>
