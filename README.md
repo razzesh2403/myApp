@@ -3,13 +3,15 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Local Setup
-  Clone the repo or download.
-  run "npm install -g @angular/cli" at the root folder from command prompt.
-  npm install --save-dev  --unsafe-perm node-sass [ref : https://stackoverflow.com/questions/48147896/error-in-cannot-find-module-node-sass]
-  ng build
-  ng serve
-  Yuppyyyy!!! Your Angular-6 app is ready.
-  Now, access the app @  http://localhost:4200/.
+<ul>
+  <li>Clone the repo or download.</li>
+  <li>run "npm install -g @angular/cli" at the root folder from command prompt.</li>
+  <li>npm install --save-dev  --unsafe-perm node-sass [ref : https://stackoverflow.com/questions/48147896/error-in-cannot-find-module-node-sass]</li>
+  <li>ng build</li>
+  <li>ng serve</li>
+  <li>Yuppyyyy!!! Your Angular-6 app is ready.</li>
+  <li>Now, access the app @  http://localhost:4200/.</li>
+  </ul>
 
 ## Development server
 
